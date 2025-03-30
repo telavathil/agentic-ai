@@ -23,3 +23,7 @@ class Tool(ABC):
     @abstractmethod
     def get_parameters_schema(self) -> Dict[str, Any]:
         """Get the schema for the parameters this tool accepts"""
+
+    @abstractmethod
+    def get_example(self) -> str:
+        """Get an example of how to use the tool"""

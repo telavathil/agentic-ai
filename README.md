@@ -57,3 +57,5 @@ Key environment variables:
 - `MAX_TOKENS_RESPONSE`: Maximum tokens for responses (default: 4096)
 - `PLANNING_TEMPERATURE`: Temperature for planning (default: 0.2)
 - `EXECUTION_TEMPERATURE`: Temperature for execution (default: 0.7)
+- `GOOGLE_API_KEY`: Used for Google Cloud Access
+- `SEARCH_ENGINE_ID`: Used for Google Programmable Search

@@ -36,7 +36,7 @@ async def main():
 
             # Test with a simple task
             task = """
-            Calculate the compound interest on $1000 with 5% annual interest rate for 3 years
+            Calculate the compound interest on $4000 with 4.5% annual interest rate for 5 years
             """
             logger.info("Processing task: %s", task)
             result = await agent.process_task(task)

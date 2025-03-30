@@ -1,13 +1,17 @@
 """Module for the agent."""
 
 from typing import Dict, Any, List
+import logging
 
 from agent.core.client import AnthropicClient
 from agent.core.state import AgentState, TaskStatus
 from agent.planning.planner import TaskPlanner
 from agent.execution.executor import StepExecutor
 from tools.calculator import Calculator
+from tools.web_search import WebSearch
 from config.settings import settings
+
+logger = logging.getLogger(__name__)
 
 class Agent:
     """Class for the agent."""
@@ -15,18 +19,22 @@ class Agent:
     def __init__(self):
         """Initialize the agent."""
         self.state = AgentState()
-        self.planner = TaskPlanner()
-        self.executor = StepExecutor()
-        self.client = AnthropicClient(model=settings.anthropic_model)
 
         # Initialize tools
         self.tools_registry = {}
         self._register_default_tools()
 
+        # Initialize executor with tools
+        self.executor = StepExecutor(tools_registry=self.tools_registry)
+        self.client = AnthropicClient(model=settings.anthropic_model)
+        self.planner = TaskPlanner(tools_registry=self.tools_registry)
+
     def _register_default_tools(self):
         """Register default tools"""
         calculator = Calculator()
+        web_search = WebSearch()
         self.tools_registry[calculator.name] = calculator
+        self.tools_registry[web_search.name] = web_search
 
     def register_tool(self, tool):
         """Register a new tool"""
@@ -63,6 +71,8 @@ class Agent:
                 memory_type="execution"
             )
 
+            logger.info("Step %d completed: %s", step_id, step["description"])
+            logger.info("Result: %s", result["output"])
             results.append({
                 "step": step,
                 "result": result

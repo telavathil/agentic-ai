@@ -3,6 +3,7 @@
 import ast
 import math
 import operator
+import json
 from typing import Dict, Any
 
 from .base import Tool
@@ -41,6 +42,13 @@ class Calculator(Tool):
             "abs": abs,
             "round": round,
         }
+
+    def get_example(self) -> str:
+        """Return an example of how to use the calculator tool."""
+        example = {
+            "expression": "1000 * (1 + 0.05)**3"  # Compound interest example
+        }
+        return json.dumps(example)
 
     def get_parameters_schema(self) -> Dict[str, Any]:
         return {

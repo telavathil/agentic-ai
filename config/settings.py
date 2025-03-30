@@ -31,6 +31,8 @@ class Settings(BaseSettings):
         default=0.7,
         env='EXECUTION_TEMPERATURE'
     )
+    google_api_key: str = Field(..., env='GOOGLE_API_KEY')
+    search_engine_id: str = Field(..., env='SEARCH_ENGINE_ID')
 
     class Config:
         """Pydantic config."""
